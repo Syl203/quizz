@@ -1,4 +1,11 @@
-<?php session_start(); ?>
+<?php session_start(); 
+
+if(isset($_SESSION["score"])){
+    session_unset();
+    session_destroy();
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,10 +24,10 @@
     <div class="container">
         <div class="row">
             <?php if(!isset($_SESSION["pseudo"])){ ?>
-            <form action="quizz.php" method="post">
+            <form  method="post">
                 <label for="prenom">Entrez votre pseudo :</label><br>
                 <input type="text" name="prenom" placeholder="Votre pseudo" id="prenom"><br><br>
-                <button type="submit" class="btn btn-warning">Envoyer</button>
+                <button type="submit" name="btn-click" class="btn btn-warning">Envoyer</button>
             </form>
             <?php }
             else{ ?>
@@ -34,9 +41,9 @@
 </html>
 
 <?php
-    if(isset($_POST) && !empty($_POST)){
+    if(isset($_POST["btn-click"]) && !empty($_POST)){
         $pseudo = $_POST['prenom'];
         $_SESSION["pseudo"] = $pseudo;
-        header("Location: question1.php");
+        
     }
 ?>

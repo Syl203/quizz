@@ -1,14 +1,6 @@
 <?php session_start(); 
 
-$question = array(
-    array(
-        "question1" => "Que veut dire PHP ?",
-        "reponse1" => "Pneu Hyper Préssurisé",
-        "reponse2" => "Hypertext Preprocessor",
-        "reponse3" => "Phrase Hautement Pompeuse",
-        "reponse4" => "Aucun des trois"
-    )
-);
+require_once("questions.php");
 
 ?>
 
@@ -28,12 +20,50 @@ $question = array(
 <body>
 <div class="container">
         <div class="row">
-            <form action="quizz.php" method="post">
-                <label for="prenom">Entrez votre pseudo :</label><br>
-                <input type="text" name="prenom" placeholder="Votre pseudo" id="prenom"><br><br>
-                <button type="submit" class="btn btn-warning">Envoyer</button>
+
+            <?php
+                if(isset($_POST) && !empty($_POST)){
+                    $_SESSION["score"] = 0;
+                    if($_POST["reponse"] === $question[0]['reponse2']){
+                        echo "<h2>Bravo !</h2>";
+                        $_SESSION["score"] += 1;
+                    }else{
+                        echo '<h2>Mauvaise réponse !</h2>';
+                        echo "<p>Il fallait répondre 'PHP Hypertext Preprocessor'</p>";
+                    }
+                    echo "<p>SCORE : " . $_SESSION["score"] . "</p>";
+                    echo "<button class='btn btn-warning' onclick=\"window.location.href='question2.php'\">Question suivante</button>";
+            }else { ?>
+            <form action="question1.php" method="post">
+                <h2>Question 1 :</h2>
+                <h4><?= $question[0]["question1"] ?></h4>
+               
+                <div class="mt-3">
+                    <input type="radio" name="reponse" class="form-check-input" id="radio1" value="<?= $question[0]['reponse1'] ?>">
+                    <label for="radio1"><?= $question[0]['reponse1']?></label>
+                </div>
+
+                <div class="mt-3">
+                    <input type="radio" name="reponse" class="form-check-input" id="radio2" value="<?= $question[0]['reponse2'] ?>">
+                    <label for="radio2"><?= $question[0]['reponse2']?></label>
+                </div>
+
+                <div class="mt-3">
+                    <input type="radio" name="reponse" class="form-check-input" id="radio3" value="<?= $question[0]['reponse3'] ?>">
+                    <label for="radio3"><?= $question[0]['reponse3']?></label>
+                </div>
+
+                <div class="mt-3">
+                    <input type="radio" name="reponse" class="form-check-input" id="radio4" value="<?= $question[0]['reponse4'] ?>">
+                    <label for="radio4"><?= $question[0]['reponse4']?></label>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-warning">VALIDER</button>
             </form>
+            <?php } ?>
         </div>
     </div>
 </body>
 </html>
+
+
