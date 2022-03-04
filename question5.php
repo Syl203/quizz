@@ -26,11 +26,31 @@ require_once("questions.php");
                     if($_POST["reponse"] === $question[4]['reponse1']){
                         echo "<h2>Bravo !</h2>";
                         $_SESSION["score"] += 1;
+                        
+                        
                     }else{
                         echo '<h2>Mauvaise réponse !</h2>';
                         echo "<p>Il fallait répondre 'strtoupper'</p>";
                     }
-                    echo "<p>SCORE : " . $_SESSION["score"] . "</p>";
+                    if($_SESSION["score"] === 5){
+                        $resultat = "Bravo ! Score maximal";
+                    }
+                    elseif($_SESSION["score"] === 4){
+                        $resultat = "Pas mal du tout !";
+                    }
+                    elseif($_SESSION["score"] === 3){
+                        $resultat = "Peut mieux faire !";
+                    }
+                    elseif($_SESSION["score"] === 2){
+                        $resultat = "Pas terrible !";
+                    }
+                    elseif($_SESSION["score"] === 1){
+                        $resultat = "Vous êtes mauvais !";
+                    }
+                    elseif($_SESSION["score"] === 0){
+                        $resultat = "Vous êtes très nul !";
+                    }
+                    echo "<p>SCORE : " . $_SESSION["score"] . " ". $resultat . "</p>";
                     echo "<button class='btn btn-warning' onclick=\"window.location.href='quizz.php'\">FIN DU QUIZZ !</button>";
             }else { ?>
             <form action="question5.php" method="post" >
